@@ -1,0 +1,13 @@
+[package]
+name = "vlc-print"
+version = "0.1.0"
+authors = ["Jacob Henn <windowWeasel@outlook.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+image = "0.24"
+anyhow = "1"
+argh = "0.1"
+pbr = "1"
