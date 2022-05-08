@@ -30,6 +30,10 @@ struct Args {
     /// where to map zero in the squooshed 0..u16::MAX range
     #[argh(option, short = 'l')]
     luma: u8,
+
+    /// don't print the image after cropping it
+    #[argh(switch, short = 'n')]
+    no_print: bool,
 }
 
 /// Guess the `(left, right)` endpoints of the image content at this row, bounded by extra black
@@ -247,10 +251,12 @@ fn go() -> Result<()> {
     pb.message("printing image ");
     pb.inc();
 
-    if cfg!(target_os = "windows") {
-        Command::new("mspaint").arg("/p").arg(new_path).output().context("couldn't print through mspaint")?;
-    } else {
-        bail!("it looks like you aren't running this on Windows");
+    if !args.no_print {
+        if cfg!(target_os = "windows") {
+            Command::new("mspaint").arg("/p").arg(new_path).output().context("couldn't print through mspaint")?;
+        } else {
+            bail!("it looks like you aren't running this on Windows");
+        }
     }
 
     pb.inc();
